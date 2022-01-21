@@ -2,29 +2,35 @@ package org.springframework.samples.petclinic.care;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
-public class CareService {    
+@Service
+public class CareService {   
+    @Autowired
+    CareProvisionRepository cpr;
 
     public List<Care> getAllCares(){
-        return null;
+        return cpr.findAllCares();
     }
 
     public List<Care> getAllCompatibleCares(String petTypeName){
-        return null;
+        return cpr.findCompatibleCares(petTypeName);
     }
 
     public Care getCare(String careName) {
-        return null;
+        return cpr.findCareByName(careName);
     }
 
-    
+    @Transactional(rollbackFor = NonCompatibleCaresException.class)
     public CareProvision save(CareProvision p) throws NonCompatibleCaresException, UnfeasibleCareException {
-        return null;   
+        return null;
     }
 
     public List<CareProvision> getAllCaresProvided(){
-        return null;
+        return cpr.findAll();
     }
 
     public List<CareProvision> getCaresProvided(Integer visitId){
